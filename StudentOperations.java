@@ -108,4 +108,15 @@ public class StudentOperations {
             System.out.println("Error updating student: " + e.getMessage());
         }
     }
+
+    // Method to Delete student
+    public void deleteStudent(long prn) {
+        try (PreparedStatement stmt = conn.prepareStatement("DELETE FROM students WHERE prn = ?")) {
+            stmt.setLong(1, prn);
+            int deleted = stmt.executeUpdate();
+            System.out.println(deleted > 0 ? "Deleted successfully." : "Student not found.");
+        } catch (SQLException e) {
+            System.out.println("Error deleting student: " + e.getMessage());
+        }
+    }
 }

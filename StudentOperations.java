@@ -33,7 +33,7 @@ public class StudentOperations {
         }
     }
 
-    // Display all students
+    // Method to Display all students
     public void displayStudents() {
         try (Statement stmt = conn.createStatement()) {
             ResultSet rs = stmt.executeQuery("SELECT * FROM students");
@@ -50,5 +50,19 @@ public class StudentOperations {
         } catch (SQLException e) {
             System.out.println("Error displaying students: " + e.getMessage());
         }
+    }
+
+    // Method to Search by PRN
+    public Student searchByPRN(long prn) {
+        try (PreparedStatement stmt = conn.prepareStatement("SELECT * FROM students WHERE prn = ?")) {
+            stmt.setLong(1, prn);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return new Student(prn, rs.getString("name"), rs.getString("branch"), rs.getString("batch"), rs.getDouble("cgpa"));
+            }
+        } catch (SQLException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        return null;
     }
 }

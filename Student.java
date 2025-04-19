@@ -7,7 +7,7 @@ public class Student {
     private String batch;
     private double cgpa;
 
-    // Parameterized Constructor  
+    // Parameterized Constructor
     public Student(long prn, String name, String branch, String batch, double cgpa) {
         this.prn = prn;
         this.name = name;
@@ -18,27 +18,27 @@ public class Student {
 
     // Getter-Setter Methods for Private Members
     public String getName() {
-          return name;
-     }
+        return name;
+    }
 
     public void setName(String name) {
-          this.name = name;
-     }
+        this.name = name;
+    }
 
     public long getPRN() {
-          return prn;
-     }
+        return prn;
+    }
 
     public void setPRN(long prn) {
-          this.prn = prn;
-     }
+        this.prn = prn;
+    }
 
     public String getBranch() {
-          return branch;
+        return branch;
     }
 
     public void setBranch(String branch) {
-          this.branch = branch;
+        this.branch = branch;
     }
 
     public String getBatch() {
@@ -55,5 +55,10 @@ public class Student {
 
     public void setCGPA(double cgpa) {
         this.cgpa = cgpa;
+    }
+
+    // Display Student Details
+    public void display() {
+        System.out.printf("\nPRN: %d | Name: %s | Branch: %s | Batch: %s | CGPA: 2f\n", prn, name, branch, batch, cgpa);
     }
 }

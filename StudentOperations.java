@@ -1,12 +1,13 @@
+
 // StudentOperations.java
 import java.sql.*;
 import java.util.*;
 
 public class StudentOperations {
     private Connection conn;
-    private static final String URL="jdbc:mysql://localhost:3306/db_schema";
-    private static final String USER="root";
-    private static final String PASSWORD="PASSWORD";
+    private static final String URL = "jdbc:mysql://localhost:3306/db_schema";
+    private static final String USER = "root";
+    private static final String PASSWORD = "PASSWORD";
 
     public StudentOperations() {
         try {
@@ -21,11 +22,11 @@ public class StudentOperations {
     public void addStudent(Student student) {
         String sql = "INSERT INTO students (prn, name, branch, batch, cgpa) VALUES (?, ?, ?, ?, ?)";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setLong(1, student.getPrn());
+            stmt.setLong(1, student.getPRN());
             stmt.setString(2, student.getName());
             stmt.setString(3, student.getBranch());
             stmt.setString(4, student.getBatch());
-            stmt.setDouble(5, student.getCgpa());
+            stmt.setDouble(5, student.getCGPA());
             stmt.executeUpdate();
             System.out.println("Student added successfully.");
         } catch (SQLException e) {
@@ -43,8 +44,7 @@ public class StudentOperations {
                         rs.getString("name"),
                         rs.getString("branch"),
                         rs.getString("batch"),
-                        rs.getDouble("cgpa")
-                );
+                        rs.getDouble("cgpa"));
                 s.display();
             }
         } catch (SQLException e) {
@@ -58,7 +58,8 @@ public class StudentOperations {
             stmt.setLong(1, prn);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
-                return new Student(prn, rs.getString("name"), rs.getString("branch"), rs.getString("batch"), rs.getDouble("cgpa"));
+                return new Student(prn, rs.getString("name"), rs.getString("branch"), rs.getString("batch"),
+                        rs.getDouble("cgpa"));
             }
         } catch (SQLException e) {
             System.out.println("Error: " + e.getMessage());
@@ -72,7 +73,8 @@ public class StudentOperations {
             stmt.setString(1, name);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
-                return new Student(rs.getLong("prn"), name, rs.getString("branch"), rs.getString("batch"), rs.getDouble("cgpa"));
+                return new Student(rs.getLong("prn"), name, rs.getString("branch"), rs.getString("batch"),
+                        rs.getDouble("cgpa"));
             }
         } catch (SQLException e) {
             System.out.println("Error: " + e.getMessage());
@@ -85,7 +87,8 @@ public class StudentOperations {
         try (Statement stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)) {
             ResultSet rs = stmt.executeQuery("SELECT * FROM students");
             if (rs.absolute(pos + 1)) {
-                return new Student(rs.getLong("prn"), rs.getString("name"), rs.getString("branch"), rs.getString("batch"), rs.getDouble("cgpa"));
+                return new Student(rs.getLong("prn"), rs.getString("name"), rs.getString("branch"),
+                        rs.getString("batch"), rs.getDouble("cgpa"));
             }
         } catch (SQLException e) {
             System.out.println("Error: " + e.getMessage());
@@ -100,8 +103,8 @@ public class StudentOperations {
             stmt.setString(1, student.getName());
             stmt.setString(2, student.getBranch());
             stmt.setString(3, student.getBatch());
-            stmt.setDouble(4, student.getCgpa());
-            stmt.setLong(5, student.getPrn());
+            stmt.setDouble(4, student.getCGPA());
+            stmt.setLong(5, student.getPRN());
             int updated = stmt.executeUpdate();
             System.out.println(updated > 0 ? "Updated successfully." : "Student not found.");
         } catch (SQLException e) {
